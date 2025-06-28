@@ -1,0 +1,3165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Nirwana Hotel Management</title>
+    <style>
+        :root {
+            --primary: #5b6abf;  /* Softer blue */
+            --secondary: #ff7e7e;  /* Coral pink */
+            --accent: #6bbf9b;  /* Mint green */
+            --dark: #3a3d5a;  /* Dark navy */
+            --light: #f8f9fa;
+            --success: #6bbf9b;
+            --warning: #ffb347;
+            --text: #4a4a4a;
+            --background: #f5f7ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        /* Welcome Section */
+        .welcome-section {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-left {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary), #4a569d);
+            color: white;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80') center/cover;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .welcome-right {
+            width: 500px;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .developer-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .developer-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .developer-card h2 i {
+            color: var(--accent);
+        }
+
+        .developer-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .developer-info p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .developer-info i {
+            width: 20px;
+            color: var(--accent);
+        }
+
+        .system-description {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .system-description h3 {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .system-description h3 i {
+            color: var(--accent);
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            width: 100%;
+        }
+
+        .auth-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .auth-subtitle {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(91, 106, 191, 0.1);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            width: 100%;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #4a569d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            margin-top: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f1f5ff;
+        }
+
+        .auth-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .auth-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Role Selection */
+        .role-selection {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .role-option {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        .role-option.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+            display: none;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--dark);
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .logo-text h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background-color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item i {
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Staff specific nav items */
+        .staff-only {
+            display: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            background-color: var(--background);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .header-title p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            background-size: cover;
+        }
+
+        .user-info {
+            line-height: 1.3;
+        }
+
+        .user-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-card h3 i {
+            color: var(--primary);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .stat-change.up {
+            color: var(--success);
+        }
+
+        .stat-change.down {
+            color: var(--secondary);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-btn {
+            background: white;
+            border: 2px dashed #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            border-color: var(--primary);
+            background-color: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .action-btn i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .action-btn span {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        /* Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        /* Room Status */
+        .room-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .status-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Room Cards */
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .room-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .room-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .room-details {
+            padding: 1.5rem;
+        }
+
+        .room-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .room-price {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .room-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .room-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #64748b;
+            background: #f8fafc;
+            padding: 0.35rem 0.75rem;
+            border-radius: 2rem;
+        }
+
+        .room-feature i {
+            color: var(--primary);
+        }
+
+        .room-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Customer Cards */
+        .customer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .customer-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .customer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .customer-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            background-color: var(--primary);
+        }
+
+        .customer-info {
+            flex: 1;
+        }
+
+        .customer-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+        }
+
+        .customer-email {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+
+        .customer-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .customer-stat {
+            font-size: 0.85rem;
+        }
+
+        .customer-stat span {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .customer-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .customer-action-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            color: var(--primary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .customer-action-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Booking Table */
+        .booking-table-container {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .booking-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .booking-table th, .booking-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .booking-table th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #64748b;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .booking-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .booking-table tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .booking-customer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .booking-customer-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            background-color: var(--primary);
+        }
+
+        .booking-status {
+            padding: 0.35rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .status-confirmed {
+            background-color: #e6f7ee;
+            color: #166534;
+        }
+
+        .status-pending {
+            background-color: #fff8e6;
+            color: #854d0e;
+        }
+
+        .status-canceled {
+            background-color: #ffebeb;
+            color: #991b1b;
+        }
+
+        .status-checkedout {
+            background-color: #e6f3ff;
+            color: #1e40af;
+        }
+
+        .status-checkedin {
+            background-color: #e6f7ee;
+            color: #166534;
+        }
+
+        .table-action {
+            padding: 0.35rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: #f8fafc;
+            color: var(--primary);
+        }
+
+        .table-action:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Food Menu */
+        .food-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .food-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .food-image {
+            height: 160px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .food-details {
+            padding: 1.25rem;
+        }
+
+        .food-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+        }
+
+        .food-price {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .food-description {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .food-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .food-category {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            background-color: #f1f5ff;
+            color: var(--primary);
+        }
+
+        /* Staff Management */
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .staff-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .staff-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            background-color: var(--primary);
+        }
+
+        .staff-info {
+            flex: 1;
+        }
+
+        .staff-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+        }
+
+        .staff-position {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+
+        .staff-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .status-available {
+            background-color: var(--success);
+        }
+
+        .status-busy {
+            background-color: var(--warning);
+        }
+
+        .status-off {
+            background-color: #64748b;
+        }
+
+        /* About Section */
+        .about-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .about-title i {
+            color: var(--primary);
+        }
+
+        .about-content {
+            line-height: 1.8;
+            color: #64748b;
+        }
+
+        .about-content p {
+            margin-bottom: 1.25rem;
+        }
+
+        .about-features {
+            margin: 2rem 0;
+        }
+
+        .about-feature {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f1f5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .about-feature-text h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+        }
+
+        /* Settings Section */
+        .settings-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .settings-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .settings-title i {
+            color: var(--primary);
+        }
+
+        .settings-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .settings-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            background: #f8fafc;
+        }
+
+        .settings-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-col {
+            flex: 1;
+        }
+
+        .settings-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Helpdesk Section */
+        .helpdesk-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .helpdesk-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .helpdesk-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .helpdesk-title i {
+            color: var(--primary);
+        }
+
+        .helpdesk-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .helpdesk-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .helpdesk-question {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .helpdesk-question i {
+            color: var(--primary);
+        }
+
+        .helpdesk-answer {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .contact-support {
+            margin-top: 2rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-method {
+            flex: 1;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .contact-method:hover {
+            background: #f1f5ff;
+            transform: translateY(-2px);
+        }
+
+        .contact-method i {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-method h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-method p {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* Modern Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse:hover {
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .welcome-right {
+                width: 450px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .welcome-section {
+                flex-direction: column;
+            }
+            
+            .welcome-left, .welcome-right {
+                width: 100%;
+            }
+            
+            .welcome-left {
+                padding: 3rem 2rem;
+            }
+            
+            .dashboard {
+                grid-template-columns: 240px 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .room-status {
+                grid-template-columns: 1fr;
+            }
+            
+            .settings-row, .contact-methods {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .welcome-left, .welcome-right {
+                padding: 2rem 1.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Welcome Section -->
+    <div class="welcome-section" id="welcome-section">
+        <div class="welcome-left">
+            <div class="hotel-logo">
+                <div class="hotel-logo-text">
+                    <h1>Grand Nirwana</h1>
+                    <p>Luxury Hotel & Resort</p>
+                </div>
+            </div>
+            
+            <div class="developer-card">
+                <h2><i class="fas fa-user-tie"></i> Developer Information</h2>
+                <div class="developer-info">
+                    <p><i class="fas fa-user"></i> Muhammad Abrar Rayhan</p>
+                    <p><i class="fas fa-graduation-cap"></i> Information Systems Student</p>
+                    <p><i class="fas fa-university"></i> Telkom University Jakarta</p>
+                    <p><i class="fas fa-calendar-alt"></i> Semester 5</p>
+                </div>
+            </div>
+            
+            <div class="system-description">
+                <h3><i class="fas fa-info-circle"></i> About This System</h3>
+                <p>This hotel management system is a project developed as part of my web development learning journey. It demonstrates key functionalities for hotel operations including reservations, room management, and customer relations.</p>
+            </div>
+        </div>
+        
+        <div class="welcome-right">
+            <!-- Login Form -->
+            <div class="auth-container" id="login-form">
+                <h2 class="auth-title">Welcome Back</h2>
+                <p class="auth-subtitle">Sign in to your management dashboard</p>
+                
+                <div class="role-selection">
+                    <div class="role-option active" data-role="admin">Admin</div>
+                    <div class="role-option" data-role="staff">Staff</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" placeholder="Enter your password">
+                </div>
+                
+                <button class="btn btn-primary" id="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" class="auth-link" id="show-register-btn">Register here</a></p>
+                    <p><a href="#" class="auth-link" id="show-forgot-btn">Forgot password?</a></p>
+                </div>
+            </div>
+            
+            <!-- Registration Form -->
+            <div class="auth-container" id="register-form" style="display: none;">
+                <h2 class="auth-title">Create Account</h2>
+                <p class="auth-subtitle">Get started with your free account</p>
+                
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" placeholder="Create a password">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" placeholder="Confirm your password">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select class="form-control">
+                        <option>Admin</option>
+                        <option>Staff</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-primary" id="register-btn">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" class="auth-link" id="show-login-btn">Login here</a></p>
+                </div>
+            </div>
+            
+            <!-- Forgot Password Form -->
+            <div class="auth-container" id="forgot-form" style="display: none;">
+                <h2 class="auth-title">Reset Password</h2>
+                <p class="auth-subtitle">Enter your email to receive reset instructions</p>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter your email">
+                </div>
+                
+                <button class="btn btn-primary" id="reset-btn">
+                    <i class="fas fa-paper-plane"></i> Send Reset Link
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Remember your password? <a href="#" class="auth-link" id="show-login-btn2">Login here</a></p>
+                </div>
+            </div>
+            
+            <!-- Success Message -->
+            <div class="auth-container" id="success-message" style="display: none; text-align: center;">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="auth-title">Reset Link Sent</h2>
+                <p class="auth-subtitle">We've sent a password reset link to your email address</p>
+                
+                <button class="btn btn-secondary" id="back-to-login-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Login
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard (Hidden Initially) -->
+    <div class="dashboard" id="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="https://i.imgur.com/JzQZQZQ.png" alt="Grand Nirwana Logo">
+                <div class="logo-text">
+                    <h2>Grand Nirwana</h2>
+                    <p>Management System</p>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <div class="nav-item active" data-section="dashboard-section">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </div>
+                <div class="nav-item" data-section="bookings">
+                    <i class="fas fa-calendar-alt"></i>
+                    Bookings
+                </div>
+                <div class="nav-item" data-section="rooms">
+                    <i class="fas fa-bed"></i>
+                    Rooms
+                </div>
+                <div class="nav-item" data-section="customers">
+                    <i class="fas fa-users"></i>
+                    Customers
+                </div>
+                <div class="nav-item staff-only" data-section="housekeeping">
+                    <i class="fas fa-broom"></i>
+                    Housekeeping
+                </div>
+                <div class="nav-item" data-section="food-service">
+                    <i class="fas fa-utensils"></i>
+                    Food Service
+                </div>
+                <div class="nav-item admin-only" data-section="reports">
+                    <i class="fas fa-chart-bar"></i>
+                    Reports
+                </div>
+                <div class="nav-item admin-only" data-section="staff-management">
+                    <i class="fas fa-user-shield"></i>
+                    Staff Management
+                </div>
+                <div class="nav-item admin-only" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </div>
+                <div class="nav-item" data-section="helpdesk">
+                    <i class="fas fa-question-circle"></i>
+                    Helpdesk
+                </div>
+                <div class="nav-item" data-section="about">
+                    <i class="fas fa-info-circle"></i>
+                    About System
+                </div>
+            </div>
+            
+            <div style="position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;">
+                <div class="nav-item" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <div class="content-section active" id="dashboard-section">
+                <div class="header">
+                    <div class="header-title">
+                        <h1 id="dashboard-title">Dashboard Overview</h1>
+                        <p id="dashboard-subtitle">Welcome back! Here's what's happening with your hotel today.</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3><i class="fas fa-calendar-check"></i> Total Bookings</h3>
+                        <div class="stat-value">142</div>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            +12% this month
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3><i class="fas fa-bed"></i> Available Rooms</h3>
+                        <div class="stat-value">8</div>
+                        <div class="stat-change down">
+                            <i class="fas fa-arrow-down"></i>
+                            32 total rooms
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Monthly Revenue</h3>
+                        <div class="stat-value">Rp 12,450,000</div>
+                        <div class="stat-change down">
+                            <i class="fas fa-arrow-down"></i>
+                            ↓ 6% from last month
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3><i class="fas fa-user-friends"></i> Active Guests</h3>
+                        <div class="stat-value">24</div>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            +3 from yesterday
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <div class="action-btn pulse" id="new-booking-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>New Booking</span>
+                    </div>
+                    <div class="action-btn pulse" id="add-customer-btn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Add Customer</span>
+                    </div>
+                    <div class="action-btn pulse" id="manage-rooms-btn">
+                        <i class="fas fa-bed"></i>
+                        <span>Manage Rooms</span>
+                    </div>
+                    <div class="action-btn pulse" id="view-payments-btn">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>View Payments</span>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-clock"></i> Recent Activities</h2>
+                    <a href="#" class="view-all">
+                        View All
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+                
+                <div class="room-status">
+                    <div class="status-card">
+                        <h3 style="margin-bottom: 1rem;"><i class="fas fa-door-open"></i> Room Status</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Deluxe Suite (203)</span>
+                                <span class="booking-status status-confirmed">Occupied</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Executive Room (305)</span>
+                                <span class="booking-status status-pending">Reserved</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Family Room (412)</span>
+                                <span class="booking-status status-checkedout">Available</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-card">
+                        <h3 style="margin-bottom: 1rem;"><i class="fas fa-calendar-day"></i> Today's Check-ins</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div class="customer-avatar" style="background-color: #6bbf9b;">F</div>
+                                <div>
+                                    <div style="font-weight: 500;">Firman - Room 203</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Deluxe Suite • 2:00 PM</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div class="customer-avatar" style="background-color: #ff7e7e;">V</div>
+                                <div>
+                                    <div style="font-weight: 500;">Vina - Room 305</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Executive Room • 3:30 PM</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div class="customer-avatar" style="background-color: #5b6abf;">A</div>
+                                <div>
+                                    <div style="font-weight: 500;">Alex - Room 412</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Family Room • 5:00 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bookings Section -->
+            <div class="content-section" id="bookings">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>Booking Management</h1>
+                        <p>View and manage all hotel reservations</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Abrar Rayhan</div>
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <div class="action-btn pulse" id="add-booking-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>New Booking</span>
+                    </div>
+                    <div class="action-btn pulse">
+                        <i class="fas fa-filter"></i>
+                        <span>Filter</span>
+                    </div>
+                    <div class="action-btn pulse">
+                        <i class="fas fa-download"></i>
+                        <span>Export</span>
+                    </div>
+                </div>
+                
+                <div class="booking-table-container">
+                    <table class="booking-table">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Customer</th>
+                                <th>Room</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#BK-1001</td>
+                                <td>
+                                    <div class="booking-customer">
+                                        <div class="booking-customer-avatar" style="background-color: #6bbf9b;">F</div>
+                                        Firman
+                                    </div>
+                                </td>
+                                <td>Deluxe Suite (203)</td>
+                                <td>15 Jun 2023</td>
+                                <td>18 Jun 2023</td>
+                                <td><span class="booking-status status-checkedin"><i class="fas fa-key"></i> Checked In</span></td>
+                                <td><button class="table-action">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#BK-1002</td>
+                                <td>
+                                    <div class="booking-customer">
+                                        <div class="booking-customer-avatar" style="background-color: #ff7e7e;">V</div>
+                                        Vina
+                                    </div>
+                                </td>
+                                <td>Executive Room (305)</td>
+                                <td>20 Jun 2023</td>
+                                <td>25 Jun 2023</td>
+                                <td><span class="booking-status status-pending"><i class="fas fa-clock"></i> Reserved</span></td>
+                                <td><button class="table-action">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#BK-1003</td>
+                                <td>
+                                    <div class="booking-customer">
+                                        <div class="booking-customer-avatar" style="background-color: #5b6abf;">A</div>
+                                        Alex
+                                    </div>
+                                </td>
+                                <td>Family Room (412)</td>
+                                <td>12 Jun 2023</td>
+                                <td>15 Jun 2023</td>
+                                <td><span class="booking-status status-checkedout"><i class="fas fa-door-open"></i> Checked Out</span></td>
+                                <td><button class="table-action">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#BK-1004</td>
+                                <td>
+                                    <div class="booking-customer">
+                                        <div class="booking-customer-avatar" style="background-color: #ffb347;">S</div>
+                                        Sarah
+                                    </div>
+                                </td>
+                                <td>Deluxe Suite (204)</td>
+                                <td>10 Jun 2023</td>
+                                <td>12 Jun 2023</td>
+                                <td><span class="booking-status status-canceled"><i class="fas fa-times-circle"></i> Canceled</span></td>
+                                <td><button class="table-action">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Rooms Section -->
+            <div class="content-section" id="rooms">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>Room Management</h1>
+                        <p>Manage all hotel rooms and availability</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Abrar Rayhan</div>
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <div class="action-btn pulse" id="add-room-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Add Room</span>
+                    </div>
+                    <div class="action-btn pulse">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Refresh</span>
+                    </div>
+                </div>
+                
+                <div class="room-grid">
+                    <div class="room-card">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Deluxe Suite" class="room-image">
+                        <div class="room-details">
+                            <h3 class="room-title">Deluxe Suite (203)</h3>
+                            <div class="room-price">Rp 1,500,000 / night</div>
+                            <div class="room-features">
+                                <span class="room-feature"><i class="fas fa-bed"></i> 1 King Bed</span>
+                                <span class="room-feature"><i class="fas fa-ruler-combined"></i> 45m²</span>
+                                <span class="room-feature"><i class="fas fa-wifi"></i> Free WiFi</span>
+                                <span class="room-feature"><i class="fas fa-tv"></i> Smart TV</span>
+                            </div>
+                            <div class="room-actions">
+                                <span class="booking-status status-confirmed">Occupied</span>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Manage</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="room-card">
+                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Executive Room" class="room-image">
+                            <div class="room-details">
+                            <h3 class="room-title">Executive Room (305)</h3>
+                            <div class="room-price">Rp 1,200,000 / night</div>
+                            <div class="room-features">
+                                <span class="room-feature"><i class="fas fa-bed"></i> 1 Queen Bed</span>
+                                <span class="room-feature"><i class="fas fa-ruler-combined"></i> 35m²</span>
+                                <span class="room-feature"><i class="fas fa-wifi"></i> Free WiFi</span>
+                                <span class="room-feature"><i class="fas fa-coffee"></i> Coffee Maker</span>
+                            </div>
+                            <div class="room-actions">
+                                <span class="booking-status status-pending">Reserved</span>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Manage</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="room-card">
+                        <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Family Room" class="room-image">
+                        <div class="room-details">
+                            <h3 class="room-title">Family Room (412)</h3>
+                            <div class="room-price">Rp 2,000,000 / night</div>
+                            <div class="room-features">
+                                <span class="room-feature"><i class="fas fa-bed"></i> 2 Queen Beds</span>
+                                <span class="room-feature"><i class="fas fa-ruler-combined"></i> 60m²</span>
+                                <span class="room-feature"><i class="fas fa-wifi"></i> Free WiFi</span>
+                                <span class="room-feature"><i class="fas fa-utensils"></i> Mini Kitchen</span>
+                            </div>
+                            <div class="room-actions">
+                                <span class="booking-status status-checkedout">Available</span>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Manage</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="room-card">
+                        <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Presidential Suite" class="room-image">
+                        <div class="room-details">
+                            <h3 class="room-title">Presidential Suite (501)</h3>
+                            <div class="room-price">Rp 3,500,000 / night</div>
+                            <div class="room-features">
+                                <span class="room-feature"><i class="fas fa-bed"></i> 1 King Bed</span>
+                                <span class="room-feature"><i class="fas fa-ruler-combined"></i> 80m²</span>
+                                <span class="room-feature"><i class="fas fa-wifi"></i> Free WiFi</span>
+                                <span class="room-feature"><i class="fas fa-hot-tub"></i> Jacuzzi</span>
+                            </div>
+                            <div class="room-actions">
+                                <span class="booking-status status-checkedout">Available</span>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Manage</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Customers Section -->
+            <div class="content-section" id="customers">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>Customer Management</h1>
+                        <p>View and manage all hotel customers</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Abrar Rayhan</div>
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <div class="action-btn pulse" id="add-customer-btn2">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Add Customer</span>
+                    </div>
+                    <div class="action-btn pulse">
+                        <i class="fas fa-search"></i>
+                        <span>Search</span>
+                    </div>
+                </div>
+                
+                <div class="customer-grid">
+                    <div class="customer-card">
+                        <div class="customer-avatar" style="background-color: #6bbf9b;">F</div>
+                        <div class="customer-info">
+                            <div class="customer-name">Firman</div>
+                            <div class="customer-email">firman@example.com</div>
+                            <div class="customer-stats">
+                                <div class="customer-stat">Bookings: <span>5</span></div>
+                                <div class="customer-stat">Spent: <span>Rp 7,500,000</span></div>
+                            </div>
+                        </div>
+                        <div class="customer-actions">
+                            <button class="customer-action-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="customer-action-btn">
+                                <i class="fas fa-envelope"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="customer-card">
+                        <div class="customer-avatar" style="background-color: #ff7e7e;">V</div>
+                        <div class="customer-info">
+                            <div class="customer-name">Vina</div>
+                            <div class="customer-email">vina@example.com</div>
+                            <div class="customer-stats">
+                                <div class="customer-stat">Bookings: <span>3</span></div>
+                                <div class="customer-stat">Spent: <span>Rp 3,600,000</span></div>
+                            </div>
+                        </div>
+                        <div class="customer-actions">
+                            <button class="customer-action-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="customer-action-btn">
+                                <i class="fas fa-envelope"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="customer-card">
+                        <div class="customer-avatar" style="background-color: #5b6abf;">A</div>
+                        <div class="customer-info">
+                            <div class="customer-name">Alex</div>
+                            <div class="customer-email">alex@example.com</div>
+                            <div class="customer-stats">
+                                <div class="customer-stat">Bookings: <span>2</span></div>
+                                <div class="customer-stat">Spent: <span>Rp 4,000,000</span></div>
+                            </div>
+                        </div>
+                        <div class="customer-actions">
+                            <button class="customer-action-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="customer-action-btn">
+                                <i class="fas fa-envelope"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="customer-card">
+                        <div class="customer-avatar" style="background-color: #ffb347;">S</div>
+                        <div class="customer-info">
+                            <div class="customer-name">Sarah</div>
+                            <div class="customer-email">sarah@example.com</div>
+                            <div class="customer-stats">
+                                <div class="customer-stat">Bookings: <span>4</span></div>
+                                <div class="customer-stat">Spent: <span>Rp 5,200,000</span></div>
+                            </div>
+                        </div>
+                        <div class="customer-actions">
+                            <button class="customer-action-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="customer-action-btn">
+                                <i class="fas fa-envelope"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Housekeeping Section -->
+            <div class="content-section" id="housekeeping">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>Housekeeping Management</h1>
+                        <p>Manage room cleaning and maintenance schedules</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">SM</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Staff Member</div>
+                            <div class="user-role" id="user-role-display">Staff</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <div class="action-btn pulse" id="add-task-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Add Task</span>
+                    </div>
+                    <div class="action-btn pulse">
+                        <i class="fas fa-filter"></i>
+                        <span>Filter</span>
+                    </div>
+                </div>
+                
+                <div class="booking-table-container">
+                    <table class="booking-table">
+                        <thead>
+                            <tr>
+                                <th>Room</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Housekeeper</th>
+                                <th>Last Cleaned</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>203</td>
+                                <td>Deluxe Suite</td>
+                                <td><span class="booking-status status-confirmed">Clean</span></td>
+                                <td>Budi</td>
+                                <td>Today, 10:30 AM</td>
+                                <td><button class="table-action">Request Clean</button></td>
+                            </tr>
+                            <tr>
+                                <td>305</td>
+                                <td>Executive Room</td>
+                                <td><span class="booking-status status-pending">Needs Cleaning</span></td>
+                                <td>-</td>
+                                <td>Yesterday, 3:15 PM</td>
+                                <td><button class="table-action">Assign</button></td>
+                            </tr>
+                            <tr>
+                                <td>412</td>
+                                <td>Family Room</td>
+                                <td><span class="booking-status status-confirmed">Clean</span></td>
+                                <td>Ani</td>
+                                <td>Today, 11:45 AM</td>
+                                <td><button class="table-action">Request Clean</button></td>
+                            </tr>
+                            <tr>
+                                <td>501</td>
+                                <td>Presidential Suite</td>
+                                <td><span class="booking-status status-pending">Inspection Needed</span></td>
+                                <td>Manager</td>
+                                <td>Today, 9:00 AM</td>
+                                <td><button class="table-action">Inspect</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Food Service Section -->
+            <div class="content-section" id="food-service">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>Food Service</h1>
+                        <p>Manage food orders and room service</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Abrar Rayhan</div>
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <div class="action-btn pulse" id="add-food-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Add Menu Item</span>
+                    </div>
+                    <div class="action-btn pulse">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>View Orders</span>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-utensils"></i> Food Menu</h2>
+                    <a href="#" class="view-all">
+                        View All
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+                
+                <div class="food-menu">
+                    <div class="food-card">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Healthy Salad" class="food-image">
+                        <div class="food-details">
+                            <h3 class="food-title">Healthy Salad</h3>
+                            <div class="food-price">Rp 120,000</div>
+                            <div class="food-description">Fresh vegetables with olive oil dressing</div>
+                            <div class="food-actions">
+                                <span class="food-category">Vegetarian</span>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="food-card">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Steak Dinner" class="food-image">
+                        <div class="food-details">
+                            <h3 class="food-title">Steak Dinner</h3>
+                            <div class="food-price">Rp 350,000</div>
+                            <div class="food-description">Premium beef steak with mashed potatoes</div>
+                            <div class="food-actions">
+                                <span class="food-category">Main Course</span>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="food-card">
+                        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Pasta Carbonara" class="food-image">
+                        <div class="food-details">
+                            <h3 class="food-title">Pasta Carbonara</h3>
+                            <div class="food-price">Rp 180,000</div>
+                            <div class="food-description">Classic Italian pasta with creamy sauce</div>
+                            <div class="food-actions">
+                                <span class="food-category">Italian</span>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="food-card">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Pizza Margherita" class="food-image">
+                        <div class="food-details">
+                            <h3 class="food-title">Pizza Margherita</h3>
+                            <div class="food-price">Rp 220,000</div>
+                            <div class="food-description">Traditional Italian pizza with fresh basil</div>
+                            <div class="food-actions">
+                                <span class="food-category">Italian</span>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-header" style="margin-top: 2rem;">
+                    <h2 class="section-title"><i class="fas fa-list-alt"></i> Recent Orders</h2>
+                    <a href="#" class="view-all">
+                        View All
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+                
+                <div class="booking-table-container">
+                    <table class="booking-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Room</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#ORD-1001</td>
+                                <td>203 (Firman)</td>
+                                <td>Steak Dinner, Salad</td>
+                                <td>Rp 470,000</td>
+                                <td><span class="booking-status status-confirmed">Delivered</span></td>
+                                <td><button class="table-action">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-1002</td>
+                                <td>305 (Vina)</td>
+                                <td>Pasta Carbonara</td>
+                                <td>Rp 180,000</td>
+                                <td><span class="booking-status status-pending">Preparing</span></td>
+                                <td><button class="table-action">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-1003</td>
+                                <td>412 (Alex)</td>
+                                <td>Pizza Margherita</td>
+                                <td>Rp 220,000</td>
+                                <td><span class="booking-status status-confirmed">Delivered</span></td>
+                                <td><button class="table-action">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Reports Section -->
+            <div class="content-section" id="reports">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>Reports & Analytics</h1>
+                        <p>View hotel performance and generate reports</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Abrar Rayhan</div>
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <div class="action-btn pulse" id="generate-report-btn">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Generate Report</span>
+                    </div>
+                    <div class="action-btn pulse">
+                        <i class="fas fa-calendar"></i>
+                        <span>Select Date Range</span>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3><i class="fas fa-chart-line"></i> Occupancy Rate</h3>
+                        <div class="stat-value">78%</div>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            +5% from last month
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Monthly Revenue</h3>
+                        <div class="stat-value">Rp 12,450,000</div>
+                        <div class="stat-change down">
+                            <i class="fas fa-arrow-down"></i>
+                            ↓ 6% from last month
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3><i class="fas fa-star"></i> Average Rating</h3>
+                        <div class="stat-value">4.7/5</div>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            +0.2 from last month
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3><i class="fas fa-user-friends"></i> Repeat Guests</h3>
+                        <div class="stat-value">42%</div>
+                        <div class="stat-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            +8% from last month
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-chart-pie"></i> Revenue Breakdown</h2>
+                    <a href="#" class="view-all">
+                        View Detailed Report
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+                
+                <div class="room-status">
+                    <div class="status-card">
+                        <h3 style="margin-bottom: 1rem;"><i class="fas fa-bed"></i> Room Type Revenue</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Deluxe Suite</span>
+                                <span>Rp 5,200,000 (42%)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Executive Room</span>
+                                <span>Rp 3,600,000 (29%)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Family Room</span>
+                                <span>Rp 2,400,000 (19%)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Presidential Suite</span>
+                                <span>Rp 1,250,000 (10%)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-card">
+                        <h3 style="margin-bottom: 1rem;"><i class="fas fa-calendar"></i> Monthly Trends</h3>
+                        <div style="height: 200px; display: flex; align-items: center; justify-content: center; color: #64748b;">
+                            [Revenue Chart Placeholder]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Staff Management Section -->
+            <div class="content-section" id="staff-management">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>Staff Management</h1>
+                        <p>Manage hotel staff and their schedules</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Abrar Rayhan</div>
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <div class="action-btn pulse" id="add-staff-btn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Add Staff</span>
+                    </div>
+                    <div class="action-btn pulse">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Schedule</span>
+                    </div>
+                </div>
+                
+                <div class="staff-grid">
+                    <div class="staff-card">
+                        <div class="staff-avatar" style="background-color: #6bbf9b;">V</div>
+                        <div class="staff-info">
+                            <div class="staff-name">Vina</div>
+                            <div class="staff-position">Front Desk</div>
+                            <div class="staff-status">
+                                <div class="status-indicator status-available"></div>
+                                <span>Available</span>
+                            </div>
+                        </div>
+                        <div class="customer-actions">
+                            <button class="customer-action-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="customer-action-btn">
+                                <i class="fas fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="staff-card">
+                        <div class="staff-avatar" style="background-color: #ff7e7e;">B</div>
+                        <div class="staff-info">
+                            <div class="staff-name">Budi</div>
+                            <div class="staff-position">Housekeeping</div>
+                            <div class="staff-status">
+                                <div class="status-indicator status-busy"></div>
+                                <span>Busy</span>
+                            </div>
+                        </div>
+                        <div class="customer-actions">
+                            <button class="customer-action-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="customer-action-btn">
+                                <i class="fas fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="staff-card">
+                        <div class="staff-avatar" style="background-color: #5b6abf;">A</div>
+                        <div class="staff-info">
+                            <div class="staff-name">Ani</div>
+                            <div class="staff-position">Housekeeping</div>
+                            <div class="staff-status">
+                                <div class="status-indicator status-available"></div>
+                                <span>Available</span>
+                            </div>
+                        </div>
+                        <div class="customer-actions">
+                            <button class="customer-action-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="customer-action-btn">
+                                <i class="fas fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="staff-card">
+                        <div class="staff-avatar" style="background-color: #ffb347;">R</div>
+                        <div class="staff-info">
+                            <div class="staff-name">Rudi</div>
+                            <div class="staff-position">Room Service</div>
+                            <div class="staff-status">
+                                <div class="status-indicator status-off"></div>
+                                <span>Off Duty</span>
+                            </div>
+                        </div>
+                        <div class="customer-actions">
+                            <button class="customer-action-btn">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="customer-action-btn">
+                                <i class="fas fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings Section -->
+            <div class="content-section" id="settings">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>System Settings</h1>
+                        <p>Configure your hotel management system</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Abrar Rayhan</div>
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <div class="settings-card">
+                        <h3 class="settings-title"><i class="fas fa-hotel"></i> Hotel Information</h3>
+                        
+                        <div class="settings-row">
+                            <div class="settings-col">
+                                <div class="settings-group">
+                                    <label class="settings-label">Hotel Name</label>
+                                    <input type="text" class="settings-control" value="Grand Nirwana Hotel">
+                                </div>
+                            </div>
+                            <div class="settings-col">
+                                <div class="settings-group">
+                                    <label class="settings-label">Contact Email</label>
+                                    <input type="email" class="settings-control" value="info@grandnirwana.com">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-group">
+                            <label class="settings-label">Address</label>
+                            <input type="text" class="settings-control" value="123 Luxury Street, Jakarta 12345">
+                        </div>
+                        
+                        <div class="settings-row">
+                            <div class="settings-col">
+                                <div class="settings-group">
+                                    <label class="settings-label">Phone Number</label>
+                                    <input type="tel" class="settings-control" value="+62 812 3456 7890">
+                                </div>
+                            </div>
+                            <div class="settings-col">
+                                <div class="settings-group">
+                                    <label class="settings-label">Timezone</label>
+                                    <select class="settings-control">
+                                        <option>Asia/Jakarta (WIB)</option>
+                                        <option>Asia/Makassar (WITA)</option>
+                                        <option>Asia/Jayapura (WIT)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-actions">
+                            <button class="btn btn-secondary">Cancel</button>
+                            <button class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3 class="settings-title"><i class="fas fa-lock"></i> Security Settings</h3>
+                        
+                        <div class="settings-group">
+                            <label class="settings-label">Password Requirements</label>
+                            <select class="settings-control">
+                                <option>Medium (8+ characters)</option>
+                                <option>Strong (12+ characters with complexity)</option>
+                                <option>Very Strong (16+ characters with complexity)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="settings-group">
+                            <label class="settings-label">Two-Factor Authentication</label>
+                            <select class="settings-control">
+                                <option>Disabled</option>
+                                <option>Enabled for Admins</option>
+                                <option>Enabled for All Users</option>
+                            </select>
+                        </div>
+                        
+                        <div class="settings-group">
+                            <label class="settings-label">Session Timeout</label>
+                            <select class="settings-control">
+                                <option>15 minutes</option>
+                                <option>30 minutes</option>
+                                <option>1 hour</option>
+                                <option>2 hours</option>
+                            </select>
+                        </div>
+                        
+                        <div class="settings-actions">
+                            <button class="btn btn-secondary">Cancel</button>
+                            <button class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3 class="settings-title"><i class="fas fa-bell"></i> Notification Settings</h3>
+                        
+                        <div class="settings-group">
+                            <label class="settings-label">Email Notifications</label>
+                            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" checked>
+                                    New bookings
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" checked>
+                                    Cancellations
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox">
+                                    Room service requests
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" checked>
+                                    Payment reminders
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-group">
+                            <label class="settings-label">SMS Notifications</label>
+                            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox">
+                                    Urgent matters
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" checked>
+                                    VIP guest arrivals
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-actions">
+                            <button class="btn btn-secondary">Cancel</button>
+                            <button class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Helpdesk Section -->
+            <div class="content-section" id="helpdesk">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>Helpdesk & Support</h1>
+                        <p>Get help with the hotel management system</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Abrar Rayhan</div>
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="helpdesk-section">
+                    <div class="helpdesk-card">
+                        <h3 class="helpdesk-title"><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
+                        
+                        <div class="helpdesk-item">
+                            <div class="helpdesk-question">
+                                <i class="fas fa-question"></i>
+                                How do I add a new room to the system?
+                            </div>
+                            <div class="helpdesk-answer">
+                                To add a new room, navigate to the Rooms section and click the "Add Room" button. Fill in the room details including type, price, and amenities, then click "Save". The new room will now be available for bookings.
+                            </div>
+                        </div>
+                        
+                        <div class="helpdesk-item">
+                            <div class="helpdesk-question">
+                                <i class="fas fa-question"></i>
+                                How can I generate a monthly revenue report?
+                            </div>
+                            <div class="helpdesk-answer">
+                                Monthly reports can be generated from the Reports section. Click on the "Generate Report" button and select the desired date range. You can export the report in PDF or Excel format for further analysis.
+                            </div>
+                        </div>
+                        
+                        <div class="helpdesk-item">
+                            <div class="helpdesk-question">
+                                <i class="fas fa-question"></i>
+                                What should I do if a booking status is incorrect?
+                            </div>
+                            <div class="helpdesk-answer">
+                                If a booking status needs correction, go to the Bookings section, find the booking in question, and click "Edit". Update the status to the correct value and save your changes. The system will automatically notify the guest if configured to do so.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="helpdesk-card">
+                        <h3 class="helpdesk-title"><i class="fas fa-book"></i> User Guides</h3>
+                        
+                        <div class="helpdesk-item">
+                            <div class="helpdesk-question">
+                                <i class="fas fa-file-alt"></i>
+                                Getting Started Guide
+                            </div>
+                            <div class="helpdesk-answer">
+                                Our comprehensive getting started guide walks you through setting up your hotel profile, adding rooms, and making your first booking. Download the PDF version for offline reference.
+                            </div>
+                        </div>
+                        
+                        <div class="helpdesk-item">
+                            <div class="helpdesk-question">
+                                <i class="fas fa-file-alt"></i>
+                                Advanced Features Manual
+                            </div>
+                            <div class="helpdesk-answer">
+                                Learn about advanced features like revenue management, housekeeping scheduling, and integration with third-party booking systems in our detailed manual.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="helpdesk-card contact-support">
+                        <h3 class="helpdesk-title"><i class="fas fa-headset"></i> Contact Support</h3>
+                        <p>Can't find what you're looking for? Our support team is available to help you with any questions or issues you may have.</p>
+                        
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <h3>Email Support</h3>
+                                <p>support@grandnirwana.com</p>
+                                <p>Typically responds within 2 hours</p>
+                            </div>
+                            
+                            <div class="contact-method">
+                                <i class="fas fa-phone"></i>
+                                <h3>Phone Support</h3>
+                                <p>+62 21 1234 5678</p>
+                                <p>Available 24/7 for urgent matters</p>
+                            </div>
+                            
+                            <div class="contact-method">
+                                <i class="fas fa-comment-dots"></i>
+                                <h3>Live Chat</h3>
+                                <p>Click the chat icon</p>
+                                <p>Available Mon-Fri, 8AM-5PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- About Section -->
+            <div class="content-section" id="about">
+                <div class="header">
+                    <div class="header-title">
+                        <h1>About The System</h1>
+                        <p>Learn more about this hotel management solution</p>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar" id="user-avatar">AR</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-display-name">Abrar Rayhan</div>
+                            <div class="user-role" id="user-role-display">Admin</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-section">
+                    <h2 class="about-title"><i class="fas fa-info-circle"></i> Grand Nirwana Hotel Management System</h2>
+                    <div class="about-content">
+                        <p>This comprehensive hotel management system is designed to streamline all aspects of hotel operations, from reservations and room management to customer relations and financial reporting. The system provides a centralized platform to manage your hotel's daily activities efficiently.</p>
+                        
+                        <p>As a mockup project developed by Muhammad Abrar Rayhan, an Information Systems student at Telkom University Jakarta, this system demonstrates the potential of modern web technologies in transforming hospitality management. The project showcases key functionalities while maintaining an intuitive user interface.</p>
+                        
+                        <div class="about-features">
+                            <div class="about-feature">
+                                <div class="about-feature-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="about-feature-text">
+                                    <h3>Booking Management</h3>
+                                    <p>Easily handle reservations, check-ins, and check-outs with our intuitive interface. Manage room availability in real-time and automate confirmation emails.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="about-feature">
+                                <div class="about-feature-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="about-feature-text">
+                                    <h3>Real-time Analytics</h3>
+                                    <p>Monitor your hotel's performance with comprehensive dashboards and customizable reports. Track occupancy rates, revenue streams, and guest preferences.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="about-feature">
+                                <div class="about-feature-icon">
+                                    <i class="fas fa-users-cog"></i>
+                                </div>
+                                <div class="about-feature-text">
+                                    <h3>Customer Relationship</h3>
+                                    <p>Maintain detailed guest profiles, track preferences, and manage loyalty programs. Enhance guest experiences with personalized services.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p>This demonstration version simulates the core functionalities of a production hotel management system. In a live environment, it would integrate with payment gateways, property management systems, and other operational tools to provide a complete solution for hoteliers.</p>
+                        
+                        <p><strong>Developer Note:</strong> This project represents my ongoing journey in web development and system design. As a semester 5 Information Systems student at Telkom University Jakarta, I'm continuously expanding my skills in creating practical, user-friendly solutions for real-world business challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Customer Modal -->
+    <div class="modal" id="add-customer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Customer</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" placeholder="Enter customer name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" placeholder="Enter customer email">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" placeholder="Enter phone number">
+            </div>
+            <div class="form-group">
+                <label class="form-label">ID/Passport Number</label>
+                <input type="text" class="form-control" placeholder="Enter ID/Passport">
+            </div>
+            <button class="btn btn-primary" style="margin-top: 1rem;">Add Customer</button>
+        </div>
+    </div>
+    
+    <!-- Add Room Modal -->
+    <div class="modal" id="add-room-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Room</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Room Number</label>
+                <input type="text" class="form-control" placeholder="Enter room number">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Room Type</label>
+                <select class="form-control">
+                    <option>Deluxe Suite</option>
+                    <option>Executive Room</option>
+                    <option>Family Room</option>
+                    <option>Presidential Suite</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Price per Night</label>
+                <input type="number" class="form-control" placeholder="Enter price">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Room Image</label>
+                <input type="file" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="3" placeholder="Enter room description"></textarea>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 1rem;">Add Room</button>
+        </div>
+    </div>
+    
+    <script>
+        // Current user data
+        let currentUser = {
+            name: "Abrar Rayhan",
+            email: "admin@grandnirwana.com",
+            role: "admin", // Can be 'admin' or 'staff'
+            initials: "AR"
+        };
+
+        // Auth Form Toggle
+        document.getElementById('show-register-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('forgot-form').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        });
+        
+        document.getElementById('show-login-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('forgot-form').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        });
+        
+        document.getElementById('show-forgot-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('forgot-form').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+        });
+        
+        document.getElementById('show-login-btn2').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('forgot-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        });
+        
+        document.getElementById('back-to-login-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('success-message').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('forgot-form').style.display = 'none';
+        });
+        
+        // Role selection
+        document.querySelectorAll('.role-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                currentUser.role = this.getAttribute('data-role');
+                
+                // Set different names based on role for demo purposes
+                if (currentUser.role === 'admin') {
+                    currentUser.name = "Abrar Rayhan";
+                    currentUser.initials = "AR";
+                } else {
+                    currentUser.name = "Staff Member";
+                    currentUser.initials = "SM";
+                }
+            });
+        });
+        
+        // Reset Password Flow
+        document.getElementById('reset-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('forgot-form').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+        });
+        
+        // Login/Register
+        document.getElementById('login-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('welcome-section').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'grid';
+            updateUserInterface();
+        });
+        
+        document.getElementById('register-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('welcome-section').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'grid';
+            updateUserInterface();
+        });
+                // Logout
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('welcome-section').style.display = 'flex';
+            // Reset to login form
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('forgot-form').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        });
+
+        // Update UI based on user role
+        function updateUserInterface() {
+            // Set user info in dashboard
+            document.getElementById('user-display-name').textContent = currentUser.name;
+            document.getElementById('user-role-display').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+            document.getElementById('user-avatar').textContent = currentUser.initials;
+            
+            // Update dashboard title based on role
+            if (currentUser.role === 'admin') {
+                document.getElementById('dashboard-title').textContent = 'Admin Dashboard';
+                document.getElementById('dashboard-subtitle').textContent = 'Full system access and management capabilities';
+            } else {
+                document.getElementById('dashboard-title').textContent = 'Staff Dashboard';
+                document.getElementById('dashboard-subtitle').textContent = 'Limited access for daily operations';
+            }
+            
+            // Show/hide admin-only sections
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = currentUser.role === 'admin' ? 'flex' : 'none';
+            });
+            
+            // Show/hide staff-only sections
+            document.querySelectorAll('.staff-only').forEach(el => {
+                el.style.display = currentUser.role === 'staff' ? 'flex' : 'none';
+            });
+        }
+
+        // Navigation between sections
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all nav items
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Hide all content sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the selected section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        // Modal functionality
+        function setupModal(openBtnId, modalId) {
+            const openBtn = document.getElementById(openBtnId);
+            const modal = document.getElementById(modalId);
+            const closeBtn = modal.querySelector('.close-modal');
+            
+            if (openBtn) {
+                openBtn.addEventListener('click', function() {
+                    modal.style.display = 'flex';
+                });
+            }
+            
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Set up all modals
+        setupModal('add-customer-btn', 'add-customer-modal');
+        setupModal('add-customer-btn2', 'add-customer-modal');
+        setupModal('add-room-btn', 'add-room-modal');
+        setupModal('new-booking-btn', 'add-room-modal'); // Reusing room modal for demo
+        setupModal('manage-rooms-btn', 'add-room-modal');
+
+        // Quick action buttons
+        document.getElementById('view-payments-btn').addEventListener('click', function() {
+            // Navigate to reports section
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.querySelector('.nav-item[data-section="reports"]').classList.add('active');
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('reports').classList.add('active');
+        });
+
+        // Sample data for demonstration
+        const sampleRooms = [
+            {
+                id: 1,
+                number: '203',
+                type: 'Deluxe Suite',
+                price: 1500000,
+                status: 'occupied',
+                image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 2,
+                number: '305',
+                type: 'Executive Room',
+                price: 1200000,
+                status: 'reserved',
+                image: 'https://images.unsplash.com/photo-1566669437685-b9e79526acd1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'
+            }
+        ];
+
+        const sampleCustomers = [
+            {
+                id: 1,
+                name: 'Firman',
+                email: 'firman@example.com',
+                bookings: 5,
+                spent: 7500000,
+                avatarColor: '#6bbf9b'
+            },
+            {
+                id: 2,
+                name: 'Vina',
+                email: 'vina@example.com',
+                bookings: 3,
+                spent: 3600000,
+                avatarColor: '#ff7e7e'
+            }
+        ];
+
+        // Form submission handlers
+        document.querySelector('#add-customer-modal .btn-primary').addEventListener('click', function(e) {
+            e.preventDefault();
+            // In a real app, you would send this data to a server
+            alert('Customer added successfully!');
+            document.getElementById('add-customer-modal').style.display = 'none';
+        });
+
+        document.querySelector('#add-room-modal .btn-primary').addEventListener('click', function(e) {
+            e.preventDefault();
+            // In a real app, you would send this data to a server
+            alert('Room added successfully!');
+            document.getElementById('add-room-modal').style.display = 'none';
+        });
+
+        // Initialize the UI
+        updateUserInterface();
+
+        // Responsive sidebar toggle (for mobile)
+        function setupMobileMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            const menuToggle = document.createElement('div');
+            menuToggle.className = 'mobile-menu-toggle';
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            menuToggle.style.position = 'fixed';
+            menuToggle.style.top = '1rem';
+            menuToggle.style.left = '1rem';
+            menuToggle.style.zIndex = '1000';
+            menuToggle.style.background = 'var(--primary)';
+            menuToggle.style.color = 'white';
+            menuToggle.style.width = '40px';
+            menuToggle.style.height = '40px';
+            menuToggle.style.borderRadius = '50%';
+            menuToggle.style.display = 'flex';
+            menuToggle.style.alignItems = 'center';
+            menuToggle.style.justifyContent = 'center';
+            menuToggle.style.cursor = 'pointer';
+            menuToggle.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+            
+            document.body.appendChild(menuToggle);
+            
+            menuToggle.addEventListener('click', function() {
+                sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            // Check screen size on load and resize
+            function checkScreenSize() {
+                if (window.innerWidth <= 768) {
+                    sidebar.style.display = 'none';
+                    menuToggle.style.display = 'flex';
+                } else {
+                    sidebar.style.display = 'block';
+                    menuToggle.style.display = 'none';
+                }
+            }
+            
+            window.addEventListener('resize', checkScreenSize);
+            checkScreenSize();
+        }
+
+        // Initialize mobile menu
+        setupMobileMenu();
+
+        // Sample function to add a booking
+        function addBooking(bookingData) {
+            // In a real app, this would send data to a server
+            console.log('Booking added:', bookingData);
+            return {
+                success: true,
+                bookingId: 'BK-' + Math.floor(Math.random() * 10000)
+            };
+        }
+
+        // Sample function to get room availability
+        function checkRoomAvailability(checkInDate, checkOutDate, roomType) {
+            // In a real app, this would query a server
+            return sampleRooms.filter(room => 
+                room.type === roomType && 
+                room.status !== 'occupied' && 
+                room.status !== 'reserved'
+            );
+        }
+
+        // Sample function to get customer by email
+        function getCustomerByEmail(email) {
+            // In a real app, this would query a server
+            return sampleCustomers.find(customer => customer.email === email);
+        }
+    </script>
+</body>
+</html
